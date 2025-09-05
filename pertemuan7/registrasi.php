@@ -4,7 +4,7 @@ require "functions.php";
 
 if (register($_POST) === true) {
     echo "<script>alert('User talah ditambahkan')</script>";
-    header("Location: showUsers.php");
+    header("Location: /latihan/pertemuan5/admin_login.php");
 }
 
 

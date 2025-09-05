@@ -1,12 +1,7 @@
 <?php
+require "functions.php";
 
-if (isset($_POST['submit'])) {
-    if ($_POST['email'] === 'andi@gmail.com' && $_POST['password'] === 'andi12345') {
-        header("Location: adminpanel.php");
-    } else {
-        $error = true;
-    }
-}
+validationLogin();
 
 ?>
 <!DOCTYPE html>
@@ -196,9 +191,8 @@ if (isset($_POST['submit'])) {
 
         <form action="" method="post" id="loginForm">
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Enter admin email" required>
-                <div class="error-message" id="email-error">Please enter a valid email address</div>
+                <label for="username">Username</label>
+                <input type="text" id="email" name="username" placeholder="Enter username" required>
             </div>
 
             <div class="form-group">
@@ -214,8 +208,12 @@ if (isset($_POST['submit'])) {
         </form>
 
         <div class="footer-links">
-            <?php if (isset($error)) : ?>
+            <?php if (validationLogin() === 'salahPw') : ?>
                 <span style="color: red;">Password anda salah</span>
+            <?php endif;?>
+            <?php if (validationLogin() === 'belomDaftar') : ?>
+                <span style="color: red;">Username Belom Terdaftar!</span>
+                <span><a href="/latihan/pertemuan7/registrasi.php">Daftar Sekarang</a></span>
             <?php endif;?>
         </div>
     </div>

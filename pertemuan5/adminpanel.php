@@ -71,6 +71,13 @@ if (isset($_POST['cari'])) {
           <?php $no++; ?>
         <?php endforeach;?>
       </tbody>
+      <?php if ($tampilData == []) :?>
+        <tbody>
+          <tr class="odd:bg-slate-200 even:bg-slate-100 text-center font-bold">
+            <td colspan="5" class="p-2">Belom Ada Data!</td>
+          </tr>
+        </tbody>
+      <?php endif;?>
     </table>
   </div>
 

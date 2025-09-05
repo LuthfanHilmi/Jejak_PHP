@@ -12,6 +12,7 @@ $conn = mysqli_connect(
 function selectData($query) {
     global $conn;
     $sql = mysqli_query($conn, $query);
+    $row = [];
     while ($result = mysqli_fetch_assoc($sql)) {
         $row[] = $result;
     }
@@ -85,11 +86,32 @@ function searchBar() {
     $jurusan = $_POST['keyword'];
     $query = "SELECT * FROM datamahasiswa WHERE id LIKE '%$id%' OR nim LIKE '%$nim%' OR nama_mahasiswa LIKE '%$nama%' OR jurusan LIKE '%$jurusan%'";
     $sql = mysqli_query($conn, $query);
-    $xll = mysqli_fetch_assoc($sql);
-    $grep[] = $xll;
+
+    while ($xll = mysqli_fetch_assoc($sql)) {
+        $grep[] = $xll;
+    }
     return $grep;
   }
 }
 
+function validationLogin() {
+    global $conn;
+    if (isset($_POST['submit'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        $sql = mysqli_query($conn, "SELECT password FROM users WHERE username = '$username'");
+        $pwd = mysqli_fetch_assoc($sql);
+
+        if (mysqli_num_rows($sql) === 1) {
+            if (password_verify($password, $pwd['password'])) {
+                header("Location: adminpanel.php");
+            }
+            return "salahPw";
+        }
+
+        return "belomDaftar";
+    }
+}
 
 ?>

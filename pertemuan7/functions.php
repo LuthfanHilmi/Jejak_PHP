@@ -52,7 +52,7 @@ function showData() {
     global $conn;
 
     $query = "SELECT * FROM users";
-    $sql = mysqli_query($conn, $query);
+    $sql = mysqli_query($conn, query: $query);
     while ($result = mysqli_fetch_assoc($sql)) {
         $row[] = $result;
     };
