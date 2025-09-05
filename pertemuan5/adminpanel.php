@@ -54,6 +54,14 @@ if (isset($_POST['cari'])) {
           <th class="px-6 py-3 text-center">Action</th>
         </tr>
       </thead>
+      <?php if (!$tampilData) :?>
+        <tbody>
+          <tr class="odd:bg-slate-200 even:bg-slate-100 text-center font-bold">
+            <td colspan="5" class="p-2">Keyword '<?= $_POST['keyword'] ;?>' Tidak Ditemukan!</td>
+          </tr>
+        </tbody>
+      <?php else :?>
+
       <tbody>
         <?php $no = 1; ?>
         <?php foreach($tampilData as $data) :?>
@@ -71,6 +79,7 @@ if (isset($_POST['cari'])) {
           <?php $no++; ?>
         <?php endforeach;?>
       </tbody>
+      
       <?php if ($tampilData == []) :?>
         <tbody>
           <tr class="odd:bg-slate-200 even:bg-slate-100 text-center font-bold">
@@ -78,6 +87,8 @@ if (isset($_POST['cari'])) {
           </tr>
         </tbody>
       <?php endif;?>
+      
+      <?php endif ;?>
     </table>
   </div>
 

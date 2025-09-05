@@ -86,8 +86,11 @@ function searchBar() {
     $jurusan = $_POST['keyword'];
     $query = "SELECT * FROM datamahasiswa WHERE id LIKE '%$id%' OR nim LIKE '%$nim%' OR nama_mahasiswa LIKE '%$nama%' OR jurusan LIKE '%$jurusan%'";
     $sql = mysqli_query($conn, $query);
-
-    while ($xll = mysqli_fetch_assoc($sql)) {
+    if (mysqli_num_rows($sql) === 0) {
+        return false;
+    }
+    $grep = [];
+    while ($xll = mysqli_fetch_assoc(result: $sql)) {
         $grep[] = $xll;
     }
     return $grep;
