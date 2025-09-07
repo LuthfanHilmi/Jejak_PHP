@@ -1,7 +1,12 @@
 <?php
 require('functions.php');
 
-delete();
+session_start();
+if (!isset($_SESSION['login'])) {
+  header("Location: admin_login.php");
+  exit;
+}
+
 
 $tampilData = selectData("SELECT * FROM datamahasiswa");
 
@@ -29,12 +34,28 @@ if (isset($_POST['cari'])) {
 
 <body class="bg-gray-300 font-sans min-h-screen flex flex-col items-center py-10">
 
+
+
+<!-- 
+  <div id="errorPopup"
+    class="fixed top-5 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-md opacity-0 transition-opacity duration-500">
+    <strong class="font-bold">Gagal</strong>
+    <span class="block sm:inline">Menghapus Data!</span>
+  </div> -->
+  
+  <?php if (delete() === 1) : ?>
+    <div id="errorPopup"
+      class="fixed top-5 right-5 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-md opacity-100 transition-opacity duration-500">
+      <strong class="font-bold">Berhasil</strong>
+      <span class="block sm:inline">Menghapus Data!</span>
+    </div>
+  <?php endif ;?>
+
   <h1 class="text-3xl font-bold text-gray-800 mb-6">Data Mahasiswa</h1>
 
   <!-- Search bar -->
   <div class="w-full max-w-5xl mb-6 px-4">
-    <form action="" method="post"
-      class="flex items-center border border-gray-300 rounded-md shadow-sm overflow-hidden">
+    <form action="" method="post" class="flex items-center border border-gray-300 rounded-md shadow-sm overflow-hidden">
       <input type="text" name="keyword" placeholder="Cari mahasiswa..."
         class="w-full px-4 py-2 text-gray-700 focus:outline-none bg-slate-100" />
       <button type="submit" name="cari" class="bg-blue-600 text-white px-4 py-2 hover:bg-blue-700 transition-colors">
@@ -54,41 +75,44 @@ if (isset($_POST['cari'])) {
           <th class="px-6 py-3 text-center">Action</th>
         </tr>
       </thead>
-      <?php if (!$tampilData) :?>
+      <?php if (!$tampilData): ?>
+        <?php if (isset($_POST['cari'])) :?>
         <tbody>
           <tr class="odd:bg-slate-200 even:bg-slate-100 text-center font-bold">
-            <td colspan="5" class="p-2">Keyword '<?= $_POST['keyword'] ;?>' Tidak Ditemukan!</td>
+            <td colspan="5" class="p-2">Keyword '<?= $_POST['keyword']; ?>' Tidak Ditemukan!</td>
           </tr>
         </tbody>
-      <?php else :?>
+        <?php endif ;?>
+      <?php else: ?>
 
-      <tbody>
-        <?php $no = 1; ?>
-        <?php foreach($tampilData as $data) :?>
-          <tr class="odd:bg-slate-200 even:bg-slate-100">
-            <td class="px-6 py-3"><?= $no ?></td>
-            <td class="px-6 py-3"><?= htmlspecialchars($data['nim']) ?></td>
-            <td class="px-6 py-3"><?= htmlspecialchars($data['nama_mahasiswa']) ?></td>
-            <td class="px-6 py-3"><?= htmlspecialchars($data['jurusan']) ?></td>
-            <td class="px-6 py-3 text-center space-x-2">
-              <a href="adminpanel.php?id=<?= $data['id'] ?>" class="text-red-600 hover:underline">Hapus</a>
-              <span>|</span>
-              <a href="edit.php?id=<?= $data['id'] ?>" class="text-blue-600 hover:underline">Edit</a>
-            </td>
-          </tr>
-          <?php $no++; ?>
-        <?php endforeach;?>
-      </tbody>
-      
-      <?php if ($tampilData == []) :?>
         <tbody>
-          <tr class="odd:bg-slate-200 even:bg-slate-100 text-center font-bold">
-            <td colspan="5" class="p-2">Belom Ada Data!</td>
-          </tr>
+          <?php $no = 1; ?>
+          <?php foreach ($tampilData as $data): ?>
+            <tr class="odd:bg-slate-200 even:bg-slate-100">
+              <td class="px-6 py-3"><?= $no ?></td>
+              <td class="px-6 py-3"><?= htmlspecialchars($data['nim']) ?></td>
+              <td class="px-6 py-3"><?= htmlspecialchars($data['nama_mahasiswa']) ?></td>
+              <td class="px-6 py-3"><?= htmlspecialchars($data['jurusan']) ?></td>
+              <td class="px-6 py-3 text-center space-x-2">
+                <a href="adminpanel.php?id=<?= $data['id'] ?>" class="text-red-600 hover:underline">Hapus</a>
+                <span>|</span>
+                <a href="edit.php?id=<?= $data['id'] ?>" class="text-blue-600 hover:underline">Edit</a>
+              </td>
+            </tr>
+            <?php $no++; ?>
+          <?php endforeach; ?>
         </tbody>
-      <?php endif;?>
-      
-      <?php endif ;?>
+      <?php endif; ?>
+
+        <?php if ($tampilData == []): ?>
+          <tbody>
+            <tr class="odd:bg-slate-200 even:bg-slate-100 text-center font-bold">
+              <td colspan="5" class="p-2">Belom Ada Data!</td>
+            </tr>
+          </tbody>
+        <?php endif; ?>
+
+
     </table>
   </div>
 

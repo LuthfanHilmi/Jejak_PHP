@@ -44,6 +44,7 @@ function delete() {
     if (isset($_GET['id'])) {
         $query = "DELETE FROM datamahasiswa WHERE id=$_GET[id]";
         mysqli_query($conn, $query);
+        return mysqli_affected_rows($conn);
     }
     
 }
@@ -108,6 +109,8 @@ function validationLogin() {
 
         if (mysqli_num_rows($sql) === 1) {
             if (password_verify($password, $pwd['password'])) {
+                session_start();
+                $_SESSION['login'] = true;
                 header("Location: adminpanel.php");
             }
             return "salahPw";
