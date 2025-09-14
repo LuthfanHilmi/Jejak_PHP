@@ -51,8 +51,11 @@ if (isset($_POST['cari'])) {
     </div>
   <?php endif ;?>
 
-  <h1 class="text-3xl font-bold text-gray-800 mb-6">Data Mahasiswa</h1>
+  <div class="font-bold text-white bg-blue-800 p-2 rounded-xl top-5 right-5 absolute cursor-pointer">
+    <a href="logout.php">Logout</a>
+  </div>
 
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">Data Mahasiswa</h1>
   <!-- Search bar -->
   <div class="w-full max-w-5xl mb-6 px-4">
     <form action="" method="post" class="flex items-center border border-gray-300 rounded-md shadow-sm overflow-hidden">

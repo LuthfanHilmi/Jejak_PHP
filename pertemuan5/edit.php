@@ -1,6 +1,15 @@
 <?php
 require 'functions.php';
-update()
+update();
+
+session_start();
+
+if (!isset($_SESSION['login'])) {
+    header("Location: admin_login.php");
+    exit;
+}
+
+
 
 ?>
 
