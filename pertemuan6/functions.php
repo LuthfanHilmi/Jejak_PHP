@@ -19,7 +19,7 @@ function uploadImage() {
         $hashName .= ekstensi();
 
         move_uploaded_file($_FILES['gambar']['tmp_name'], 'img/' . $hashName);
-        $query = "INSERT INTO upload VALUES ('', '$nama', '$hashName')";
+        $query = "INSERT INTO uploadimage VALUES ('', '$nama', '$hashName')";
         mysqli_query($conn, $query);
         return mysqli_affected_rows($conn);
     }
@@ -46,7 +46,7 @@ function rulesUpload() {
         
 
 
-        if (in_array($fileEks, $allowFileUpload)) {
+        if (in_array(needle: $fileEks, haystack: $allowFileUpload)) {
             echo "<script>alert('Gambar berhasil diupload')</script>";
             return uploadImage();
         } else {
@@ -63,7 +63,7 @@ function rulesUpload() {
 
 function showData() {
     global $conn;
-    $query = "SELECT * FROM upload";
+    $query = "SELECT * FROM uploadimage";
     $sql = mysqli_query($conn, $query);
     return mysqli_fetch_assoc($sql);
 }
@@ -75,7 +75,7 @@ function delete() {
     global $conn;
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        $query = "DELETE FROM upload WHERE id = $id";
+        $query = "DELETE FROM uploadimage WHERE id = $id";
         mysqli_query($conn, $query);
     }
     
