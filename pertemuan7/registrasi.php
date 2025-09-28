@@ -8,6 +8,7 @@ if (register($_POST) === true) {
 }
 
 
+var_dump($validation);
 
 
 ?>

@@ -1,3 +1,7 @@
+<?php 
+require "latihan3POST.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +10,10 @@
     <title>Document</title>
 </head>
 <body>
-    <h1><?= $_POST['name']?></h1>
+    <?php if (isset($_POST['submit'])) :?>
+        <h1><?= $_POST['name']?></h1>
+    <?php else :?>
+        <?php header("Location: latihan3POST.php")?>
+    <?php endif;?>
 </body>
 </html>
